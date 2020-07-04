@@ -15,7 +15,7 @@ import express from 'express';
 const app = express();
 
 app.use('/api', GraphqlRest({
-	schema: GraphQLSchema, 
+	schema: GraphQLSchema,
 	routeConfigs: routeConfigs
 }));
 
@@ -40,7 +40,7 @@ let routeConfigs = [
             type: 'mutation',
             name: 'login'
         },
-        tags: ['Viewer'] 
+        tags: ['Viewer']
     },{
         method: 'get',
         path: '/profile',
@@ -56,7 +56,7 @@ let routeConfigs = [
                 required: true
             }
         ],
-        tags: ['Viewer'] 
+        tags: ['Viewer']
     }
 
     /*************************************/
@@ -68,7 +68,7 @@ let routeConfigs = [
             type: 'mutation',
             name: 'createAccount'
         },
-        tags: ['Account'] 
+        tags: ['Account']
     },{
         method: 'get',
         path: '/account',
@@ -76,7 +76,7 @@ let routeConfigs = [
             type: 'query',
             name: 'accounts'
         },
-        tags: ['Account'] 
+        tags: ['Account']
     }
 ];
 

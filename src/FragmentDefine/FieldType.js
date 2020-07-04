@@ -1,66 +1,67 @@
-import ObjectType from './ObjectType';
-import {html} from 'common-tags';
+import ObjectType from './ObjectType'
+import { html } from 'common-tags'
 
 class FieldType {
-    constructor({name, description, args, type, isDeprecated, deprecationReason}, typesByName) {
-        this.name = name,
-        this.description = description;
-        this.args = args;
-        this.type = type;
-        this.isDeprecated = isDeprecated;
-        this.deprecationReason = deprecationReason;
-        this.typesByName = typesByName;
+  constructor(
+    { name, description, args, type, isDeprecated, deprecationReason },
+    typesByName,
+  ) {
+    this.name = name
+    this.description = description
+    this.args = args
+    this.type = type
+    this.isDeprecated = isDeprecated
+    this.deprecationReason = deprecationReason
+    this.typesByName = typesByName
+    return this
+  }
 
-        return this;
+  valueInFragment() {
+    let { type } = this
+    if (type.kind === 'SCALAR') {
+      return this.parseScalar()
     }
 
-    valueInfragment() {
-        let {type} = this;
-        if (type.kind === 'SCALAR') {
-            return this.parseScalar();
-        } 
-
-        if (type.kind === 'OBJECT') {
-            return this.parserObjectType();
-        }
-
-        if (type.kind === 'UNION') {
-            return this.parserUnionType();
-        }
-
-        if (type.kind === 'LIST' || type.kind === 'NON_NULL') {
-            return this.parserWrapper();
-        }
-
-        return null;
+    if (type.kind === 'OBJECT') {
+      return this.parserObjectType()
     }
 
-    parseScalar() {
-        return this.name;
+    if (type.kind === 'UNION') {
+      return this.parserUnionType()
     }
 
-    parserObjectType() {
-        let {name, type, typesByName} = this;
- 
-        return html`
-        ${name} {
-            ${ new ObjectType(typesByName[type.name], typesByName).valueInfragment()}
-        }`;
+    if (type.kind === 'LIST' || type.kind === 'NON_NULL') {
+      return this.parserWrapper()
     }
 
-    parserUnionType() {
-        let {name, type, typesByName} = this;
-        
-        return html`
-        ${name} {
-            ${ new ObjectType(typesByName[type.name], typesByName).valueInfragment()}
-        }`;
-    }
+    return null
+  }
 
-    parserWrapper() {
-        let {name, type, typesByName} = this;
-        return new FieldType({name, type: type.ofType}, typesByName).valueInfragment();
-    }
+  parseScalar() {
+    return this.name
+  }
+
+  parserObjectType() {
+    let { name, type, typesByName } = this
+
+    return html` ${name} {
+    ${new ObjectType(typesByName[type.name], typesByName).valueInFragment()} }`
+  }
+
+  parserUnionType() {
+    let { name, type, typesByName } = this
+
+    return html` ${name} {
+    ${new ObjectType(typesByName[type.name], typesByName).valueInFragment()} }`
+  }
+
+  parserWrapper() {
+    let { name, type, typesByName } = this
+    return new FieldType(
+      { name, type: type.ofType },
+      typesByName,
+    ).valueInFragment()
+  }
 }
 
-export default FieldType;
+export default FieldType

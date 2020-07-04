@@ -1,25 +1,28 @@
 const presets = [
   [
-    "@babel/env",
+    '@babel/env',
     {
       targets: {
-        node: "current"
+        node: 'current',
       },
-      useBuiltIns: "usage",
+      useBuiltIns: 'usage',
     },
   ],
-];
+]
 
 const plugins = [
-	'@babel/plugin-proposal-class-properties',
-  ["@babel/plugin-transform-runtime", {
-    "corejs": false,
-    "helpers": true,
-    "regenerator": true,
-    "useESModules": false
-  }],
+  '@babel/plugin-proposal-class-properties',
+  [
+    '@babel/plugin-transform-runtime',
+    {
+      corejs: false,
+      helpers: true,
+      regenerator: true,
+      useESModules: false,
+    },
+  ],
   '@babel/plugin-transform-async-to-generator',
-  '@babel/plugin-proposal-object-rest-spread'
-];
+  '@babel/plugin-proposal-object-rest-spread',
+]
 
-module.exports = { presets, plugins };
+module.exports = { presets, plugins }
