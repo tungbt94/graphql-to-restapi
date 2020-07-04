@@ -1,18 +1,10 @@
-import {
-    GraphQLNonNull,
-    GraphQLString,
-    GraphQLInt,
-    GraphQLBoolean,
-    GraphQLFloat
-} from 'graphql';
+import { GraphQLBoolean } from 'graphql'
 
 export const profile = {
-    type: GraphQLBoolean,
-    description: 'Viewer Profile',
-    args: {
-       
-    },
-    resolve(root, params) {
-        return true
-    }
-};
+  type: GraphQLBoolean,
+  description: 'Viewer Profile',
+  args: {},
+  resolve() {
+    return true
+  },
+}
